@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <title>Barra de Progresso do Ano letivo</title>
+     <link rel="icon" href="https://static.vecteezy.com/ti/vetor-gratis/p1/582498-ilustracao-em-icone-ampulheta-gratis-vetor.jpg" type="image/jpg">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .progress-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .progress-bar {
+            width: 500px;
+            height: 45px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #4caf50;
+            width: 0;
+            transition: width 0.5s;
+        }
+
+        .progress-text {
+            margin-left: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-container">
+        <h1>Ano letivo de 2023 está <span id="progress-text">0%</span> completo</h1>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+    </div>
+
+    <script>
+        function updateProgressBar() {
+            // Obter o ano atual
+            var currentYear = new Date().getFullYear();
+
+            // Obter a data e hora atual
+            var currentDate = new Date();
+            
+            // Definir a data de término como 31 de outubro do ano atual
+            var yearEnd = new Date(currentYear, 9, 31);
+
+            // Verificar se a data atual ultrapassou a data de término
+            if (currentDate > yearEnd) {
+                // Se a data atual for posterior à data de término, definir a porcentagem como 100%
+                var progressPercentage = 100;
+            } else {
+                // Caso contrário, calcular a porcentagem do ano completado até a data atual
+                var yearStart = new Date(currentYear, 0, 1);
+                var progressPercentage = ((currentDate - yearStart) / (yearEnd - yearStart)) * 100;
+            }
+
+            // Atualizar a barra de progresso e o texto
+            var progressBar = document.getElementById("progress");
+            progressBar.style.width = progressPercentage + "%";
+            var progressText = document.getElementById("progress-text");
+            progressText.textContent = progressPercentage.toFixed(2) + "%";
+        }
+
+        // Atualizar a barra de progresso a cada segundo
+        setInterval(updateProgressBar, 1000);
+    </script>
+</body>
+</html>
