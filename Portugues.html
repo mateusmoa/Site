@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jogo Numérico</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    background-image: url('https://github.com/mateusmoa/Site/blob/main/f2476d40-f63f-4af1-8e0f-62de884d6be2.jpeg?raw=true');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  #game-container {
+    background-color: rgba(167, 133, 183, 0.8);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+  }
+  #answer {
+    padding: 10px;
+    margin: 10px 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  #checkBtn {
+    background-color: #876892;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  #checkBtn:hover {
+    background-color: #45a049;
+  }
+p {
+    color:  #ffffff;
+    font-weight: bold;
+  }
+h1 {
+    color:  #ffffff;
+  }
+</style>
+</head>
+<body>
+<div id="game-container">
+  <h1>Jogo Numérico</h1>
+  <p id="question"></p>
+  <input type="text" id="answer" placeholder="Digite sua resposta">
+  <button id="checkBtn">Verificar</button>
+  <p id="result"></p>
+  <p id="progress"></p> <!-- Elemento para exibir o progresso -->
+</div>
+<script>
+  const questions = [
+    { type: 'fracionário', text: 'Você tinha uma pizza inteira e comeu metade dela. Quanto da pizza você comeu?', answer: '1/2' },
+    { type: 'fracionário', text: 'Se você tem um bolo e corta em quatro partes iguais, e come duas partes, quanto do bolo você comeu?', answer: '2/4' },
+    { type: 'fracionário', text: 'Você tem um copo cheio de suco e bebe um terço dele. Quanto de suco você bebeu?', answer: '1/3' },
+    // Adicione mais perguntas aqui para outros tipos de numerais
+  ];
+
+  const questionElement = document.getElementById('question');
+  const answerElement = document.getElementById('answer');
+  const resultElement = document.getElementById('result');
+  const progressElement = document.getElementById('progress'); // Elemento para exibir o progresso
+  const checkBtn = document.getElementById('checkBtn');
+
+  let currentQuestionIndex = 0;
+  let correctAnswers = 0;
+
+  function showQuestion(index) {
+    questionElement.textContent = questions[index].text;
+  }
+
+  function updateProgress() {
+    const totalQuestions = questions.length;
+    progressElement.textContent = `${correctAnswers}/${totalQuestions}`;
+  }
+
+  function checkAnswer() {
+    const userAnswer = answerElement.value.trim();
+    const correctAnswer = questions[currentQuestionIndex].answer;
+
+    if (userAnswer === correctAnswer) {
+      resultElement.textContent = 'Resposta correta!';
+      correctAnswers++;
+      updateProgress();
+    } else {
+      resultElement.textContent = 'Resposta incorreta. Tente novamente.';
+    }
+
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+      showQuestion(currentQuestionIndex);
+      answerElement.value = '';
+    } else {
+      questionElement.textContent = 'Fim do jogo.';
+      answerElement.style.display = 'none';
+      checkBtn.style.display = 'none';
+    }
+  }
+
+  showQuestion(currentQuestionIndex);
+  updateProgress();
+  checkBtn.addEventListener('click', checkAnswer);
+</script>
+</body>
+</html>
