@@ -14,76 +14,358 @@
     background-size: cover;
     background-position: center;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     height: 100vh;
   }
+
+  #titulo {
+    background-color: null;
+    color: rgba(167, 133, 183, 0.8);
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 70px;
+    width: 100%;
+  }
+
+  #container {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    height: 30vh; 
+    margin-top: -50px;
+  }
+
   #game-container {
     background-color: rgba(167, 133, 183, 0.8);
     border-radius: 10px;
     padding: 20px;
     text-align: center;
+    width: 65%;
+    height: 100%;
+    overflow-y: auto;
   }
-  }
-  #answer {
-    padding: 10px;
-    margin: 10px 0;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  #checkBtn {
-    background-color: #876892;
-    color: white;
-    border: none;
-    padding: 10px 20px;
+    #rank-container {
+    background-color: rgba(167, 133, 183, 0.8);
+    border-radius: 10px;
+    padding: 20px;
     text-align: center;
-    text-decoration: none;
+    width: 20%;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .option {
     display: inline-block;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
+    margin: 5px;
   }
-  #checkBtn:hover {
-    background-color: #45a049;
-  }
-p {
+  p {
     color:  #ffffff;
     font-weight: bold;
   }
-h1 {
-    color:  #ffffff;
+
+  #nameInput {
+    display: none;
+    margin-top: 10px;
+  }
+  #rank-list {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+  }
+  
+  .rank-item {
+    margin-bottom: 5px;
+  }
+
+  #try-again {
+    display: none;
   }
 </style>
 </head>
 <body>
-<div id="game-container">
+<div id="titulo">
   <h1>Jogo Numérico</h1>
-  <p id="question"></p>
-  <input type="text" id="answer" placeholder="Digite sua resposta">
-  <button id="checkBtn">Verificar</button>
-  <p id="result"></p>
-  <p id="progress"></p> <!-- Elemento para exibir o progresso -->
+</div>
+<div id="container">
+  <div id="game-container">
+    <p id="question"></p>
+    <div id="options-container"></div>
+    <input id="checkBtn" type="image" src="https://raw.githubusercontent.com/mateusmoa/Site/main/Lapis.png" style="border: none;" height="39" width="133"  />
+    <p id="result"></p>
+    <p id="progress"></p>
+    <div id="nameInput">
+      <input type="text" id="playerName" placeholder="Digite seu nome">
+      <button id="submitName">Enviar</button>
+    </div>
+  </div>
+  <div id="rank-container">
+    <p>Rank:</p>
+    <ul id="rank-list">
+      <li class="rank-item">1. Nome do Jogador - Pontuação</li>
+    </ul>
+    <button id="tryAgain">Tentar Novamente</button>
+  </div>
 </div>
 <script>
   const questions = [
-    { type: 'fracionário', text: 'Você tinha uma pizza inteira e comeu metade dela. Quanto da pizza você comeu?', answer: '1/2' },
-    { type: 'fracionário', text: 'Se você tem um bolo e corta em quatro partes iguais, e come duas partes, quanto do bolo você comeu?', answer: '2/4' },
-    { type: 'fracionário', text: 'Você tem um copo cheio de suco e bebe um terço dele. Quanto de suco você bebeu?', answer: '1/3' },
-    // Adicione mais perguntas aqui para outros tipos de numerais
-  ];
+{
+  text: 'Quanto é 1/2?',
+  options: ['1', '2', '0.5'],
+  correctIndex: 2,
+  type: 'fracionário'
+},
+{
+  text: 'Quantos dedos tem em uma mão?',
+  options: ['3', '4', '5'],
+  correctIndex: 2,
+  type: 'cardinal'
+},
+{
+text: 'Qual é o numeral cardinal que indica a quantidade de "sete"?',
+options: ['7', 'sete', 'sete unidades'],
+correctIndex: 0,
+type: 'cardinal'
+},
 
-  const questionElement = document.getElementById('question');
-  const answerElement = document.getElementById('answer');
-  const resultElement = document.getElementById('result');
-  const progressElement = document.getElementById('progress'); // Elemento para exibir o progresso
+{
+text: 'Dê a forma por extenso do numeral cardinal correspondente a "15".',
+options: ['quinze', '15', 'quinze unidades'],
+correctIndex: 0,
+type: 'cardinal'
+},
+
+{
+text: 'Complete a frase: "Comprei ____ maçãs."',
+options: ['duas', '2', 'duas unidades'],
+correctIndex: 0,
+type: 'cardinal'
+},
+
+{
+text: 'Quantos dedos tem em "cinco mãos"?',
+options: ['25', '10', '50'],
+correctIndex: 0,
+type: 'cardinal'
+},
+
+{
+text: 'Como se escreve o numeral cardinal que corresponde a "9000"?',
+options: ['nove mil', '9 mil', 'noventa mil'],
+correctIndex: 0,
+type: 'cardinal'
+},
+{
+text: 'Qual é o numeral ordinal que indica a posição de "sexto" na sequência?',
+options: ['sexta', '6º', 'sexto'],
+correctIndex: 1,
+type: 'ordinal'
+},
+
+{
+text: 'Complete a frase: "O ____ episódio da série foi emocionante."',
+options: ['sexta', 'sexto', '6º'],
+correctIndex: 1,
+type: 'ordinal'
+},
+
+{
+text: 'Qual é o numeral ordinal correspondente a "18"?',
+options: ['dezoito', '18º', 'decimo oitavo'],
+correctIndex: 1,
+type: 'ordinal'
+},
+
+{
+text: 'Em qual alternativa o numeral ordinal é utilizado incorretamente?',
+options: ['A segunda rodada', 'Ela é a terceira filha', 'O quarto dia do mês'],
+correctIndex: 0,
+type: 'ordinal'
+},
+
+{
+text: 'Como se escreve o numeral ordinal que indica a posição de "vigésimo nono"?',
+options: ['29º', 'vigésimo nono', '29ª'],
+correctIndex: 0,
+type: 'ordinal'
+},
+{
+text: 'Quanto é 1/3 de "18"?',
+options: ['6', '1/3', '3'],
+correctIndex: 0,
+type: 'fracionário'
+},
+
+{
+text: 'Complete a frase: "Ela comeu ____ do bolo."',
+options: ['um terço', '1/3', 'um terça'],
+correctIndex: 0,
+type: 'fracionário'
+},
+
+{
+text: 'Qual é o numeral fracionário para representar "5/8"?',
+options: ['5/8', 'cinco oitavos', 'cinco partes'],
+correctIndex: 1,
+type: 'fracionário'
+},
+
+{
+text: 'Se tivermos "3/4" de uma pizza, quanto da pizza ainda falta para comer?',
+options: ['1/4', '3/8', '3/4 ainda estão lá'],
+correctIndex: 0,
+type: 'fracionário'
+},
+
+{
+text: 'Quantas partes iguais fazem um inteiro?',
+options: ['1/2', '2/3', '4/4'],
+correctIndex: 2,
+type: 'fracionário'
+},
+{
+text: 'Quantas vezes "quádruplo" é maior do que "único"?',
+options: ['2', '3', '4'],
+correctIndex: 2,
+type: 'multiplicativo'
+},
+
+{
+text: 'Complete a frase: "Ela fez uma ____ porção do bolo."',
+options: ['dobra', 'dupla', 'dobro'],
+correctIndex: 2,
+type: 'multiplicativo'
+},
+
+{
+text: 'Qual é o numeral multiplicativo correspondente a "6"?',
+options: ['sextuplo', 'sextupla', '6 vezes'],
+correctIndex: 0,
+type: 'multiplicativo'
+},
+
+{
+text: 'O que significa "quinquagésuplo"?',
+options: ['50 vezes', '5 vezes', '2 vezes'],
+correctIndex: 0,
+type: 'multiplicativo'
+},
+
+{
+text: 'Complete a frase: "Este suco tem um sabor ____ de laranja."',
+options: ['dúplo', 'duplo', 'duplicado'],
+correctIndex: 1,
+type: 'multiplicativo'
+},
+{
+text: 'Qual é o numeral coletivo para "15"?',
+options: ['quinzena', '15', 'dúzia'],
+correctIndex: 0,
+type: 'coletivo'
+},
+
+{
+text: 'Quantas dúzias há em "144 bolachas"?',
+options: ['12', '144', '8'],
+correctIndex: 0,
+type: 'coletivo'
+},
+
+{
+text: 'Complete a frase: "Ele comprou uma ____ de ovos."',
+options: ['centena', 'centenas', 'centenos'],
+correctIndex: 1,
+type: 'coletivo'
+},
+
+{
+text: 'O que são numerais coletivos?',
+options: ['Numerais que indicam ordem', 'Substantivos que indicam quantidades exatas', 'Numerais que indicam parte de um todo'],
+correctIndex: 1,
+type: 'coletivo'
+},
+
+{
+text: 'Qual é o plural correto de "dúzia"?',
+options: ['duzias', 'dúzias', 'duziais'],
+correctIndex: 1,
+type: 'coletivo'
+},
+{
+text: 'Qual dos seguintes não é um tipo de numeral?',
+options: ['Cardinal', 'Fracionário', 'Multiplicativo'],
+correctIndex: 1,
+type: 'quadro'
+},
+
+{
+text: 'Qual é o tipo de numeral que expressa ordem ou posição em uma sequência?',
+options: ['Cardinal', 'Ordinal', 'Multiplicativo'],
+correctIndex: 1,
+type: 'quadro'
+},
+
+{
+text: 'Qual é o tipo de numeral que representa uma parte de um todo?',
+options: ['Cardinal', 'Fracionário', 'Multiplicativo'],
+correctIndex: 1,
+type: 'quadro'
+},
+
+{
+text: 'O que são numerais coletivos?',
+options: ['Numerais que indicam gênero e número', 'Substantivos que indicam quantidades exatas', 'Numerais utilizados para leis e decretos'],
+correctIndex: 1,
+type: 'quadro'
+},
+
+{
+text: 'Qual é o tipo de numeral que relaciona um conjunto, dando-lhes uma característica que determina o aumento através de múltiplos?',
+options: ['Fracionário', 'Cardinal', 'Multiplicativo'],
+correctIndex: 2,
+type: 'quadro'
+}
+    // Adicione mais perguntas aqui
+  ];
+    function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+// Embaralhar as questões antes de começar o jogo
+shuffleArray(questions);
+  
+    const questionElement = document.getElementById('question');
+  const optionsContainer = document.getElementById('options-container'); 
   const checkBtn = document.getElementById('checkBtn');
+  const resultElement = document.getElementById('result');
+  const progressElement = document.getElementById('progress');
+  const nameInput = document.getElementById('playerName');
+  const submitNameBtn = document.getElementById('submitName');
+  const rankList = document.getElementById('rank-list');
+  const tryAgainBtn = document.getElementById('tryAgain');
+  const gameContainer = document.getElementById('game-container');
+  const rankContainer = document.getElementById('rank-container');
 
   let currentQuestionIndex = 0;
   let correctAnswers = 0;
-
+  let consecutiveCorrectAnswers = 0;
+  let playerName = '';
+    
   function showQuestion(index) {
-    questionElement.textContent = questions[index].text;
+    const currentQuestion = questions[index];
+    questionElement.textContent = currentQuestion.text;
+    optionsContainer.innerHTML = '';
+
+    currentQuestion.options.forEach((option, i) => {
+      const optionElement = document.createElement('div');
+      optionElement.classList.add('option');
+      optionElement.innerHTML = `<label><input type="radio" name="answer" value="${i}"> ${option}</label>`;
+      optionsContainer.appendChild(optionElement);
+    });
   }
 
   function updateProgress() {
@@ -91,32 +373,107 @@ h1 {
     progressElement.textContent = `${correctAnswers}/${totalQuestions}`;
   }
 
-  function checkAnswer() {
-    const userAnswer = answerElement.value.trim();
-    const correctAnswer = questions[currentQuestionIndex].answer;
+  function showRank() {
+    rankList.innerHTML = '';
+    const players = JSON.parse(localStorage.getItem('players')) || [];
+    players.forEach((player) => {
+      const rankItem = document.createElement('li');
+      rankItem.textContent = `${player.name} - ${player.score}`;
+      rankList.appendChild(rankItem);
+    });
+    rankContainer.style.display = 'block';
+  }
 
-    if (userAnswer === correctAnswer) {
+  function checkAnswer() {
+    const selectedOption = document.querySelector('input[name="answer"]:checked');
+    if (!selectedOption) {
+      resultElement.textContent = 'Selecione uma resposta!';
+      return;
+    }
+
+    const selectedValue = parseInt(selectedOption.value);
+    const correctValue = questions[currentQuestionIndex].correctIndex;
+
+    if (selectedValue === correctValue) {
       resultElement.textContent = 'Resposta correta!';
       correctAnswers++;
-      updateProgress();
+      consecutiveCorrectAnswers++;
+
+      if (consecutiveCorrectAnswers >= 10) {
+        nameInput.style.display = 'block';
+        submitNameBtn.style.display = 'block';
+      }
     } else {
-      resultElement.textContent = 'Resposta incorreta. Tente novamente.';
+      resultElement.textContent = 'Resposta incorreta. Fim do jogo.';
+      consecutiveCorrectAnswers = 0;
+
+      questionElement.textContent = 'Fim do jogo.';
+      optionsContainer.style.display = 'none';
+
+      if (playerName) {
+        const players = JSON.parse(localStorage.getItem('players')) || [];
+        players.push({ name: playerName, score: correctAnswers });
+        localStorage.setItem('players', JSON.stringify(players));
+      }
+
+      tryAgainBtn.style.display = 'block';
+      showRank();
+      checkBtn.style.display = 'none'; 
+      questionElement.style.display = 'none';
     }
 
     currentQuestionIndex++;
+
     if (currentQuestionIndex < questions.length) {
       showQuestion(currentQuestionIndex);
-      answerElement.value = '';
-    } else {
-      questionElement.textContent = 'Fim do jogo.';
-      answerElement.style.display = 'none';
-      checkBtn.style.display = 'none';
+      selectedOption.checked = false;
     }
+
+    updateProgress();
+    showRank();
+  }
+
+  function resetGame() {
+    nameInput.value = '';
+    playerName = '';
+    correctAnswers = 0;
+    consecutiveCorrectAnswers = 0;
+    currentQuestionIndex = 0;
+    rankList.innerHTML = '';
+    rankContainer.style.display = 'none';
+    tryAgainBtn.style.display = 'none';
+    gameContainer.style.display = 'block';
+    showQuestion(currentQuestionIndex);
+    updateProgress();
+    resultElement.textContent = '';
+
+    // Reiniciar as opções selecionadas
+    const optionsElement = document.querySelectorAll('input[name="answer"]');
+    optionsElement.forEach((option) => {
+      option.checked = false;
+    });
+
+    // Mostrar novamente as opções e a pergunta
+    optionsContainer.style.display = 'block';
+    questionElement.style.display = 'block';
   }
 
   showQuestion(currentQuestionIndex);
   updateProgress();
+
   checkBtn.addEventListener('click', checkAnswer);
+
+  submitNameBtn.addEventListener('click', () => {
+    playerName = nameInput.value;
+    nameInput.style.display = 'none';
+    submitNameBtn.style.display = 'none';
+    gameContainer.style.display = 'none';
+    resultElement.textContent = '';
+    questionElement.textContent = 'Parabéns, você bateu o recorde! Insira seu nome:';
+  });
+
+  tryAgainBtn.addEventListener('click', resetGame);
+
 </script>
 </body>
 </html>
