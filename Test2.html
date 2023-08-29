@@ -5,7 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jogo Numérico</title>
-<style id="mobileStyles"> /* Estilos para dispositivos móveis */
+<style>
+    .mobileStyles {
 body {
     margin: 0;
     padding: 0;
@@ -99,8 +100,8 @@ body {
     }
     #progress {
     }
-</style>
-<style id="desktopStyles">
+    }
+.desktopStyles {
   body {
     margin: 0;
     padding: 0;
@@ -194,6 +195,7 @@ body {
     }
     #progress {
     }
+}
 </style>
 </head>
 <body>
@@ -225,7 +227,6 @@ body {
   </div>
 </div>
 <script>
-
         if (window.innerWidth > window.innerHeight) {
             tipoDispositivo = 1; // PC
         } else {
