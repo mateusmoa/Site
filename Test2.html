@@ -6,7 +6,99 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jogo Numérico</title>
 <style id="mobileStyles"> /* Estilos para dispositivos móveis */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    background-image: url('https://github.com/mateusmoa/Site/blob/main/background.jpeg?raw=true');
+    background-size: cover;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100vh;
+  }
 
+  #titulo {
+    background-color: null;
+    color: rgba(167, 133, 183, 0.8);
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 70px;
+    width: 100%; 
+    margin-top: 50px;
+  }
+
+  #container {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    height: 30vh; 
+    margin-top: -50px;
+  }
+
+  #game-container {
+    background-color: rgba(167, 133, 183, 0.8);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 65%;
+    height: 100%;
+    overflow-y: auto;
+  }
+    #rank-container {
+    background-color: rgba(167, 133, 183, 0.8);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 20%;
+    height: 100%;
+    overflow-y: auto;
+  }
+  .option {
+    display: inline-block;
+    margin: 5px;
+  }
+  p {
+    color:  #ffffff;
+    font-weight: bold;
+    margin-top: -5px;
+  }
+
+  #nameInput {
+    display: none;
+    margin-top: 10px;
+  }
+  
+  #rank-list {
+    background-color: White;
+    border-radius: 1px;
+    text-align: center;
+    width: 100%;
+    height: 78%;
+  }
+
+  #reiniciar {
+    background-color: rgb(135, 104, 146);
+    color: #ffffff;
+    margin-top: 5px;
+    font-weight: bold;
+    border-radius: 10px;
+    text-align: center;
+    width: 57%;
+    height: 12%;
+  }
+    #checkBtn {
+    position: relative;
+    width: 35%;
+    height:27%;
+    text-align: center;
+    float: center;
+    margin: 0 12px;
+    }
+    #progress {
+    }
 </style>
 <style id="desktopStyles">
   body {
