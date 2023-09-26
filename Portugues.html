@@ -120,15 +120,15 @@
   <div id="rank-container">
     <p>Rank:</p>
     <div id="rank-list">
-      1° |  MAT  |  47 <br>
-      2° |  MTH  |  47 <br>
-      3° |  RYN  |  47 <br>
-      4° |  MAR  |  46 <br>
-      5° |  FLV  |  46 <br>
-      6° |  LBR  |  43 <br>
-      7° |  MIG  |  43 <br>
-      8° |  CNA  |  40 <br>
-      9° |  CRL  |  39 <br>
+      1° |  MAT  |  43 <br>
+      2° |  MTH  |  43 <br>
+      3° |  RYN  |  43 <br>
+      4° |  MAR  |  42 <br>
+      5° |  FLV  |  42 <br>
+      6° |  LBR  |  40 <br>
+      7° |  MIG  |  40 <br>
+      8° |  CNA  |  38 <br>
+      9° |  CRL  |  37 <br>
     </div>
    <button id="reiniciar" onClick="window.location.reload()">Reiniciar</button>
   </div>
@@ -291,34 +291,6 @@ type: 'quadro'
   options: ['quinzena', '15', 'dúzia'],
   correctIndex: 0,
   type: 'coletivo'
-},
-
-{
-  text: 'Complete a frase: "Ele comprou uma ____ de ovos."',
-  options: ['centena', 'centenas', 'centenos'],
-  correctIndex: 1,
-  type: 'coletivo'
-},
-
-{
-  text: 'O que são numerais coletivos?',
-  options: ['Numerais que indicam gênero e número', 'Substantivos que indicam quantidades exatas', 'Numerais utilizados para leis e decretos'],
-  correctIndex: 1,
-  type: 'coletivo'
-},
-    
-{
-  text: 'Qual dos seguintes não é um tipo de numeral?',
-  options: ['Cardinal', 'Fracionário', 'Multiplicativo'],
-  correctIndex: 1,
-  type: 'quadro'
-},
-
-{
-  text: 'Qual é o tipo de numeral que expressa ordem ou posição em uma sequência?',
-  options: ['Cardinal', 'Ordinal', 'Multiplicativo'],
-  correctIndex: 1,
-  type: 'quadro'
 },
 
 {
@@ -507,17 +479,6 @@ shuffleArray(questions);
     progressElement.textContent = `${correctAnswers}/${totalQuestions}`;
   }
 
-  function showRank() {
-    rankList.innerHTML = '';
-    const players = JSON.parse(localStorage.getItem('players')) || [];
-    players.forEach((player) => {
-      const rankItem = document.createElement('li');
-      rankItem.textContent = `${player.name} - ${player.score}`;
-      rankList.appendChild(rankItem);
-    });
-    rankContainer.style.display = 'block';
-  }
-
   function checkAnswer() {
     const selectedOption = document.querySelector('input[name="answer"]:checked');
     if (!selectedOption) {
@@ -532,12 +493,9 @@ shuffleArray(questions);
       resultElement.textContent = 'Resposta correta!';
       correctAnswers++;
       consecutiveCorrectAnswers++;
-
-      if (consecutiveCorrectAnswers >= 10) {
-        nameInput.style.display = 'block';
-        submitNameBtn.style.display = 'block';
       }
-    } else {
+      
+      else {
       resultElement.textContent = 'Resposta incorreta. Fim do jogo.';
       consecutiveCorrectAnswers = 0;
 
@@ -564,7 +522,6 @@ shuffleArray(questions);
     }
 
     updateProgress();
-    showRank();
   }
 
   function resetGame() {
@@ -596,18 +553,6 @@ shuffleArray(questions);
   updateProgress();
 
   checkBtn.addEventListener('click', checkAnswer);
-
-  submitNameBtn.addEventListener('click', () => {
-    playerName = nameInput.value;
-    nameInput.style.display = 'none';
-    submitNameBtn.style.display = 'none';
-    gameContainer.style.display = 'none';
-    resultElement.textContent = '';
-    questionElement.textContent = 'Parabéns, você bateu o recorde! Insira seu nome:';
-  });
-
-  tryAgainBtn.addEventListener('click', resetGame);
-
 </script>
 </body>
 </html>
