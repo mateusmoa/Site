@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-     <title>Barra de Progresso do Ano letivo</title>
+     <title>Barra de Progresso do Ano Letivo</title>
      <link rel="icon" href="https://static.vecteezy.com/ti/vetor-gratis/p1/582498-ilustracao-em-icone-ampulheta-gratis-vetor.jpg" type="image/jpg">
     <style>
         body {
@@ -43,6 +43,10 @@
             font-size: 18px;
             font-weight: bold;
         }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -51,6 +55,8 @@
         <div class="progress-bar">
             <div class="progress" id="progress"></div>
         </div>
+        <!-- Adicionar o elemento img para o GIF e ocultá-lo inicialmente -->
+        <img src="https://github.com/mateusmoa/Site/blob/main/confetti-confete.gif?raw=true" alt="GIF" id="gif" class="hidden">
     </div>
 
     <script>
@@ -68,6 +74,10 @@
             if (currentDate > yearEnd) {
                 // Se a data atual for posterior à data de término, definir a porcentagem como 100%
                 var progressPercentage = 100;
+
+                // Exibir o GIF
+                var gif = document.getElementById("gif");
+                gif.classList.remove("hidden");
             } else {
                 // Caso contrário, calcular a porcentagem do ano completado até a data atual
                 var yearStart = new Date(currentYear, 0, 1);
